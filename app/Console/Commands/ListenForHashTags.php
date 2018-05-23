@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Tweet;
 use Illuminate\Console\Command;
 use TwitterStreamingApi;
 
@@ -12,7 +13,7 @@ class ListenForHashTags extends Command
      *
      * @var string
      */
-    protected $signature = 'analista:listen-for-hash-tags';
+    protected $signature = 'analista:listen-for-hash-tags {hashtags* : List all the hashtags separated by spaces}';
 
     /**
      * The console command description.
@@ -39,8 +40,10 @@ class ListenForHashTags extends Command
     public function handle()
     {
         TwitterStreamingApi::publicStream()
-            ->whenHears('#ddiotesting', function (array $tweet) {
-                dump("{$tweet['user']['screen_name']} tweeted {$tweet['text']}");
+            ->whenHears($this->argument('hashtags'), function (array $rawTweet) {
+                $tweet = app()->make('App\Tweet')->makeFromRaw($rawTweet);
+                $tweet->save();
+                $tweet->queueForProcessing();
             })
             ->startListening();
     }

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Tweet;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(Tweet::class, function($app){
+            return new Tweet($app->make('redis'));
+        });
     }
 }
