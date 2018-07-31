@@ -8,10 +8,11 @@ class DashboardTest extends TestCase
 {
     public function testDashboardOnline()
     {
-        $response = $this->get('/dashboard');
+        $url = route('dashboard');
+        $response = $this->get($url);
 
-        $response->assertStatus(200);
         $response->assertViewHas('trackedTerms');
+        $response->assertStatus(200);
     }
 
     public function testHomeRedirectsToDashboard()
