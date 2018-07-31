@@ -6,9 +6,13 @@
 @import "variables";
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap-grid';
+@import "~bootstrap/scss/_mixins";
+@import "~bootstrap/scss/_utilities";
+@import "~bootstrap/scss/_buttons";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/card";
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+html, body, h1, h2, h3, h4, h5, h6 {
+    font-family: "Raleway";
 }

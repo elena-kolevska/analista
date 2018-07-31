@@ -1,8 +1,67 @@
 
 // Body
-$body-bg: #f5f8fa;
+$body-bg: #ffffff;
 
 // Typography
 $font-family-sans-serif: "Raleway", sans-serif;
 $font-size-base: 0.9rem;
 $line-height-base: 1.6;
+
+
+// Typography
+$font-family-sans-serif: "Raleway", sans-serif;
+$font-size-base: 0.9rem;
+$line-height-base: 1.6;
+
+$blue:    #163e4d !default;
+$light-blue:    #41acb5 !default;
+$indigo:  #6610f2 !default;
+$purple:  #4f235c !default;
+$pink:    #9d1457 !default;
+$red:     #dc3545 !default;
+$orange:  #fd7e14 !default;
+$yellow:  #ebbf3f !default;
+$green:   #afcb2d !default;
+$teal:    #008080 !default;
+$cyan:    #41acb5 !default;
+$white:    #ffffff !default;
+$gray-100: #bbbcbd !default;
+$gray-600:    #6c757d !default;
+$gray-800:    #343a40 !default;
+
+$colors: (
+    blue: $blue,
+    light-blue: $light-blue,
+    indigo: $indigo,
+    purple: $purple,
+    pink: $pink,
+    red: $red,
+    orange: $orange,
+    yellow: $yellow,
+    green: $green,
+    teal: $teal,
+    cyan: $cyan,
+    white: $white,
+    gray: $gray-600,
+    gray-dark: $gray-800
+) !default;
+
+$theme-colors: (
+    primary: $purple,
+    purple: $purple,
+    secondary: $gray-600,
+    blue: $blue,
+    teal: $teal,
+    light-blue: $light-blue,
+    pink: $pink,
+    success: $green,
+    green: $green,
+    orange: $orange,
+    info: $cyan,
+    warning: $yellow,
+    yellow: $yellow,
+    danger: $red,
+    red: $red,
+    light: $gray-100,
+    dark: $gray-800
+) !default;

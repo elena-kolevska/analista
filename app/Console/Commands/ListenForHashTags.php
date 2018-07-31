@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Tweet;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Redis;
 use TwitterStreamingApi;
 
 class ListenForHashTags extends Command
@@ -13,14 +13,14 @@ class ListenForHashTags extends Command
      *
      * @var string
      */
-    protected $signature = 'analista:listen-for-hash-tags {hashtags* : List all the hashtags separated by spaces}';
+    protected $signature = 'analista:listen-for-hash-tags {hashtag} {keywords*}';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Listen for hashtags being used on Twitter';
+    protected $description = 'Listen for tweets containing the specified hashtag';
 
     /**
      * Create a new command instance.
@@ -39,9 +39,14 @@ class ListenForHashTags extends Command
      */
     public function handle()
     {
+        // Save the parameters for later use
+        Redis::set('hashtag', $this->argument('hashtag'));
+        Redis::sadd('keywords', $this->argument('keywords'));
+
+
         TwitterStreamingApi::publicStream()
-            ->whenHears($this->argument('hashtags'), function (array $rawTweet) {
-                $tweet = app()->make('App\Tweet')->makeFromRaw($rawTweet);
+            ->whenHears($this->argument('hashtag'), function (array $rawTweet) {
+                $tweet = app()->make('App\Tweet')->build($rawTweet);
                 $tweet->save();
                 $tweet->queueForProcessing();
             })

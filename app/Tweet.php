@@ -9,7 +9,8 @@ class Tweet
 {
 
     const TWEET_PREFIX = "tweets:";
-    const UNPROCESSED_QUEUE_PREFIX = "unprocessed_tweets:";
+    const UNPROCESSED_QUEUE_KEYNAME = "unprocessed_tweets";
+    const PROCESSED_QUEUE_KEYNAME = "processed_tweets";
 
     /**
      * @var RedisManager
@@ -25,7 +26,7 @@ class Tweet
         $this->redis = $redis;
     }
 
-    public function makeFromRaw(array $tweet)
+    public function build(array $tweet)
     {
         $this->id = $tweet['id'];
         $this->text = $tweet['text'];
@@ -57,7 +58,7 @@ class Tweet
 
     public function queueForProcessing()
     {
-
+        return $this->redis->lpush(self::UNPROCESSED_QUEUE_KEYNAME, $this->getTweetKey());
     }
 
     /**

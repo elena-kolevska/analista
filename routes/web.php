@@ -12,5 +12,9 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('dashboard');
 });
+
+
+Route::get('dashboard', 'DashboardController');
+Route::resource('tracked-terms', 'TrackedTermsController');

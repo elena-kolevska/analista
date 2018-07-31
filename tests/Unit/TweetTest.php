@@ -12,6 +12,7 @@ class TweetTest extends TestCase
     private $rawTweetShort;
     private $rawTweetLong;
     private $tweet;
+    private $redisManagerMock;
 
     public function setUp()
     {
@@ -42,7 +43,7 @@ class TweetTest extends TestCase
 
     public function testCreatingATweetObjectFromAShortRawTweet()
     {
-        $tweet = $this->tweet->makeFromRaw($this->rawTweetShort);
+        $tweet = $this->tweet->build($this->rawTweetShort);
 
         $this->assertEquals($this->rawTweetShort['id'], $tweet->id);
         $this->assertEquals($this->rawTweetShort['text'], $tweet->text);
@@ -50,7 +51,7 @@ class TweetTest extends TestCase
 
     public function testCreatingATweetObjectFromALongRawTweet()
     {
-        $tweet = $this->tweet->makeFromRaw($this->rawTweetLong);
+        $tweet = $this->tweet->build($this->rawTweetLong);
 
         $this->assertEquals($this->rawTweetLong['id'], $tweet->id);
         $this->assertEquals($this->rawTweetLong['extended_tweet']['full_text'], $tweet->text);
@@ -58,7 +59,7 @@ class TweetTest extends TestCase
 
     public function testCreatingATweetObjectFromALongRawTweetWithMissingExtendedTweetKey()
     {
-        $tweet = $this->tweet->makeFromRaw($this->rawTweetLongMissingExtendedTweetKey);
+        $tweet = $this->tweet->build($this->rawTweetLongMissingExtendedTweetKey);
 
         $this->assertEquals($this->rawTweetLongMissingExtendedTweetKey['id'], $tweet->id);
         $this->assertEquals($this->rawTweetLongMissingExtendedTweetKey['text'], $tweet->text);
@@ -66,7 +67,7 @@ class TweetTest extends TestCase
 
     public function testFormingOfTweetPrefix()
     {
-        $tweet = $this->tweet->makeFromRaw($this->rawTweetShort);
+        $tweet = $this->tweet->build($this->rawTweetShort);
 
         $this->assertEquals('tweets:' . $this->rawTweetShort['id'], $tweet->getTweetKey());
 
@@ -77,7 +78,7 @@ class TweetTest extends TestCase
         $this->redisManagerMock = Mockery::mock('Illuminate\Redis\RedisManager');
         $this->app->instance('redis', $this->redisManagerMock);
 
-        $tweet = $this->app->make('App\Tweet')->makeFromRaw($this->rawTweetShort);
+        $tweet = $this->app->make('App\Tweet')->build($this->rawTweetShort);
 
         $this->redisManagerMock->shouldReceive('set')
             ->once()
