@@ -23,6 +23,7 @@
                             @endforeach
                         </div>
                     @endif
+                    <a href="{{route('dashboard')}}">Cancel</a>
                 </div>
             </div>
         </div>

@@ -12,9 +12,9 @@
 */
 
 Route::get('/', function () {
-    return redirect('dashboard');
+    return redirect()->route('dashboard');
 });
 
 
-Route::get('dashboard', 'DashboardController');
+Route::get('dashboard', 'DashboardController')->name('dashboard');
 Route::resource('tracked-terms', 'TrackedTermsController');

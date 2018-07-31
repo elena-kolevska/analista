@@ -25,10 +25,12 @@ class TrackedTermTest extends TestCase
 
         $this->redisManagerMock->shouldReceive('sadd')
             ->once()
-            ->with('tracked_terms', $trackedTerm);
+            ->with(TrackedTerm::KEY_NAME, $trackedTerm);
 
         $this->app->make(TrackedTerm::class)->store($trackedTerm);
     }
+
+
     public function testStoreAsLowerCase()
     {
         $this->redisManagerMock = Mockery::mock('Illuminate\Redis\RedisManager');
@@ -38,8 +40,21 @@ class TrackedTermTest extends TestCase
 
         $this->redisManagerMock->shouldReceive('sadd')
             ->once()
-            ->with('tracked_terms', strtolower($trackedTerm));
+            ->with(TrackedTerm::KEY_NAME, strtolower($trackedTerm));
 
         $this->app->make(TrackedTerm::class)->store($trackedTerm);
     }
+
+    public function testGetsAllTrackedTerms()
+    {
+        $this->redisManagerMock = Mockery::mock('Illuminate\Redis\RedisManager');
+        $this->app->instance('redis', $this->redisManagerMock);
+
+        $this->redisManagerMock->shouldReceive('smembers')
+            ->once()
+            ->with(TrackedTerm::KEY_NAME);
+
+        $this->app->make(TrackedTerm::class)->getAll();
+    }
+
 }

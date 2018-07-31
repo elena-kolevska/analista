@@ -3,19 +3,24 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ExampleTest extends TestCase
+class DashboardTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testBasicTest()
+    public function testDashboardOnline()
     {
         $response = $this->get('/dashboard');
 
         $response->assertStatus(200);
+        $response->assertViewHas('trackedTerms');
     }
+
+    public function testHomeRedirectsToDashboard()
+    {
+        $response = $this->get('/');
+
+        $redirectedTo = route('dashboard');
+
+        $response->assertRedirect($redirectedTo);
+    }
+
 }
