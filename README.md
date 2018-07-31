@@ -1,3 +1,7 @@
+
+[![Build Status](https://travis-ci.org/elena-kolevska/analista.svg?branch=master)](https://travis-ci.org/elena-kolevska/analista.svg)
+[![Software License](https://img.shields.io/badge/license-Unlicense-green.svg)](LICENSE)
+
 # Analista
 
 Real time analysis of tweets containing certain hashtags.
